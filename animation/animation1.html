@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基础动画</title>
+	<style type="text/css">
+		div{
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100px;
+			height: 100px;
+			background: lightgreen;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript">
+    //var oBox = document.getElementById("box");
+    //实现一个匀速运动：
+    //第一种思想：在指定时间内完成动画，计算出总距离和总时间;设置一个定时器，让元素每次都在当前元素基础上累加步长
+    // var maxLeft = utils.win("clientWidth")-oBox.offsetWidth;
+    // var duration = 3000;
+    // var step = (maxLeft/duration)*10;
+    // console.log(maxLeft);
+    // console.log(step);
+    // var timer = window.setInterval(function() {
+    // 	var curLeft = utils.css(oBox,"left");
+    // 	if(curLeft>=maxLeft){
+    // 		window.clearInterval(timer);
+    // 		return;
+    // 	}
+    // 	curLeft +=step;
+    // 	utils.css(oBox,"left",curLeft);
+    // },10);		
+
+    //第二种思想:根据当前走的时间t和总时间d，起始位置b、总距离c，计算当前元素应该在的位置，让当前元素运动到这个位置即可。
+    // function Linear (t,d,b,c) {
+    // 	return (t/d)*c+b;
+    // }
+    // var oBox = document.getElementById("box");
+    // var target = utils.win("clientWidth")-oBox.offsetWidth;
+    // var begin = utils.css(oBox,"left");
+    // var change = target - begin;
+    // var duration = 3000,time = null;
+    // var timer = window.setInterval(function(){
+    // 	time += 10;
+    // 	//console.log(time);
+    // 	if(time >= duration){
+    // 		//oBox.style.left = target+"px";
+    //         window.clearInterval(timer);
+    //         return;
+    // 	}
+    // 	var curPos = Linear(time,duration,begin,change);
+    //     utils.css(oBox,"left",curPos);
+    // },10);
+
+    //步长固定，时间不限定的情况
+    // var oBox = document.getElementById("box");
+    // var maxLeft = utils.win("clientWidth")-oBox.offsetWidth;
+    // var curLeft = utils.css(oBox,"left");
+    // var step = 5;
+    // var timer = setInterval(function(){
+    // 	if (curLeft+step >= maxLeft){
+    // 	utils.css(oBox,"left",maxLeft);
+    // 	window.clearInterval(timer);
+    //     return;
+    //     }    
+    //     curLeft += step;
+    //     utils.css(oBox,"left",curLeft);
+    // },10);
+    
+    //1、问题：当总距离/我们设置的步长不是一个整数，少走一步还不到目标位置，多走一步的话就会超出目标位置
+
+
+
+    //2、使用递归思想实现setTimeout的轮询动画,每一次执行动画之前都需要将上次设置的那个没用的定时器清除掉，以节省空间。
+    var oBox = document.getElementById("box");
+    var maxLeft = utils.win("clientWidth")-oBox.offsetWidth;
+    var step = 5;
+    var timer = null;
+    function move () {
+    	window.clearTimeout(timer);
+    	var curLeft = utils.css(oBox,"left");
+    	if (curLeft+step >= maxLeft) {
+    		utils.css(oBox,"left",maxLeft);
+            return;
+    	}
+    	curLeft += step;
+    	utils.css(oBox,"left",curLeft);
+        timer = setTimeout(move,10);
+    }
+    move();
+    
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>appleWatch鼠标跟随(JS版）</title>
+	<style type="text/css">
+	    * {
+	    	margin: 0;
+	    	padding: 0;
+	    }
+	    img {
+	    	display: block;
+	    	border: none;
+
+	    }
+		.box {
+			margin: 20px auto;
+			width: 450px;
+			position: relative;
+		}
+		.box img {
+			float: left;
+			width: 100px;
+			height: 75px;
+			margin-left: 10px;
+            border:1px solid #008000;
+
+		}
+		#mark {
+			display: none;
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 10;
+			width: 400px;
+			height: 300px;
+			border: 1px solid #0077B0;
+		}
+		#mark img {
+			float: inherit;
+			margin-left: 0;
+			width: 0;
+            border: none;
+			height: 100%;
+			width: 100%;
+		}
+		/*.bigImage {
+			display: none;
+		}*/
+	</style>
+</head>
+<body>
+	<div id="box" class="box">
+		<img class="boximg" src="img/5.jpg" bigImage="img/1.jpg">
+		<img class="boximg" src="img/6.jpg" bigImage="img/2.jpg">
+		<img class="boximg" src="img/7.jpg" bigImage="img/3.jpg">
+		<img class="boximg" src="img/8.jpg" bigImage="img/4.jpg">
+		<!-- <div id="mark">	
+		</div> -->
+	</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+	//js版本
+	var box = document.getElementById("box");
+	var boximg = document.getElementsByClassName("boximg");
+	//var bigImage = document.getElementBy('')
+	//console.log(boximg);
+	for(i=0,len=boximg.length;i<len;i++){
+		boximg[i].onmouseenter = function(e){
+		e = e || window.event;
+		var mark = document.createElement("div");
+		mark.id = "mark";
+		box.appendChild(mark);
+		var bigImage = document.createElement("img");
+		e.target=e.target||e.srcElement;
+		//console.log(e.target);
+		bigImage.id="bigImage";
+		bigImage.src = e.target.getAttribute("bigImage");
+		//console.log(e.target.getAttribute("bigImage"));
+		mark.appendChild(bigImage);
+		mark.style.display = "block";
+		mark.style.left = e.clientX - box.offsetLeft + 10 + "px";
+		mark.style.top = e.clientY - box.offsetTop + 10 + "px";
+	    };
+	    boximg[i].onmousemove = function(e){
+		e = e||window.event;
+		var mark = document.getElementById("mark");
+		mark.style.display = "block";
+		mark.style.left = e.clientX - box.offsetLeft + 10 + "px";
+		mark.style.top = e.clientY - box.offsetTop + 10 + "px";
+	    };
+	    boximg[i].onmouseleave = function(e){
+		e = e||window.event;
+		var mark = document.getElementById("mark");
+		var bigImage = document.getElementById("bigImage");
+		if(mark){
+			box.removeChild(mark);
+	    };
+	    };
+	};
+	
+</script>	
+</body>
+</html>

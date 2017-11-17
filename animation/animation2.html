@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基础动画</title>
+	<style type="text/css">
+		div{
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			position: absolute;
+			left: 400px;
+			top: 0;
+			width: 200px;
+			height: 200px;
+			background: lightgreen;
+		}
+        .btn {
+            position: absolute;
+            left: 50px;
+            top: 250px;
+            height:50px;
+        }
+        .btn input {
+            display: inline-block;
+            margin-left: 10px;
+            outline: none;
+            width: 50px;
+            height: 30px;
+            background: #fff;
+            border: 1px solid green;
+            cursor: pointer;
+        }
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+    <div class="btn">
+        <input type="button" id="btnLeft" value="向左">
+        <input type="button" id="btnRight" value="向右">
+    </div>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript">
+    var oBox = document.getElementById("box");
+    var maxLeft = utils.win("clientWidth")-oBox.offsetWidth;
+    var btnLeft = document.getElementById("btnLeft");
+    var btnRight = document.getElementById("btnRight");
+    var minLeft = 0;
+    // var timer = null;
+    // function move (target) {
+    //     window.clearTimeout(timer);
+    //     var curLeft = utils.css(oBox,"left");
+    //     console.log(curLeft);
+    //     console.log(maxLeft);
+    //     if ( curLeft<target ) {
+    //         if (curLeft+5>=maxLeft){
+    //             utils.css(oBox,"left",target);
+    //             return;
+    //         }
+    //         curLeft +=5;
+    //         utils.css(oBox,"left",curLeft);
+    //     }
+    //     else if (curLeft>target) {
+    //         if (curLeft-5<=minLeft){
+    //             utils.css(oBox,"left",target);
+    //             return;
+    //         }
+    //         curLeft -=5;
+    //         utils.css(oBox,"left",curLeft);
+    //     }
+    //     else {
+    //         return;
+    //     }
+    //     timer = window.setTimeout(function(){
+    //     move(target);
+    //     },10);
+    //     console.log(target);
+    // }
+    
+    // btnLeft.onclick = function(){
+    //     move(minLeft);
+    // };
+    // btnRight.onclick = function(){
+    //     move(maxLeft);
+    // };
+
+    //3、这样写性能不好，每次到达时间的时候，都需要先执行一次匿名函数（形成一个私有作用域），在匿名函数中再执行move,但是move需要用到的数据值在第一次执行的move方法中，需要把匿名函数形成的私有作用域作为跳板找到之前的，这样就导致了匿名函数形成的这个私有作用域不销毁。
+    // var timer = null;
+    // function move (target) {
+    //     _move();
+    //     function _move (){
+    //         window.clearTimeout(timer);
+    //         var curLeft = utils.css(oBox,"left");
+    //         console.log(curLeft);
+    //         console.log(maxLeft);
+    //         if ( curLeft<target ) {
+    //             if (curLeft+5>=maxLeft){
+    //                 utils.css(oBox,"left",target);
+    //                 return;
+    //             }
+    //             curLeft +=5;
+    //             console.log(curLeft);
+    //             utils.css(oBox,"left",curLeft);
+    //         }
+    //         else if (curLeft>target) {
+    //             if (curLeft-5<=minLeft){
+    //                 utils.css(oBox,"left",target);
+    //                 return;
+    //             }
+    //             curLeft -=5;
+    //             utils.css(oBox,"left",curLeft);
+    //         }
+    //         else {
+    //             return;
+    //         }
+    //         timer = window.setTimeout(_move,10);
+    //         console.log(target);
+    //     }    
+    // }
+    
+    // btnLeft.onclick = function(){
+    //     move(minLeft);
+    // };
+    // btnRight.onclick = function(){
+    //     move(maxLeft);
+    // };
+
+   //4、为了减少全局变量，也为了让当前元素在同一个时间只运行一个动画（下一个动画开始的时候首先把上一个动画的定时器清除掉）：保证当前元素所有动画接收定时器返回值的那个变量需要共享（把这个值放在当前元素的自定义属性上）
+   function move (target) {
+        _move();
+        function _move (){
+            window.clearTimeout(oBox.timer);
+            var curLeft = utils.css(oBox,"left");
+            console.log(curLeft);
+            console.log(maxLeft);
+            if ( curLeft<target ) {
+                if (curLeft+5>=maxLeft){
+                    utils.css(oBox,"left",target);
+                    return;
+                }
+                curLeft +=5;
+                console.log(curLeft);
+                utils.css(oBox,"left",curLeft);
+            }
+            else if (curLeft>target) {
+                if (curLeft-5<=minLeft){
+                    utils.css(oBox,"left",target);
+                    return;
+                }
+                curLeft -=5;
+                utils.css(oBox,"left",curLeft);
+            }
+            else {
+                return;
+            }
+            oBox.timer = window.setTimeout(_move,10);
+            console.log(target);
+        }    
+    }
+    
+    btnLeft.onclick = function(){
+        move(minLeft);
+    };
+    btnRight.onclick = function(){
+        move(maxLeft);
+    };
+
+
+</script>
+</body>
+</html>

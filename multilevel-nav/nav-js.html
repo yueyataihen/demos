@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多级菜单导航（JS)版</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			font-size: 14px;
+		}
+		ul,li {
+			list-style: none;
+		}
+		.box {
+			margin: 10px;
+			padding: 10px;
+			width: 300px;
+			border: 1px dashed #008000;
+			background: #ffe470;
+			background: -webkit-linear-gradient(top left,#2B93D2,#FA5889,#CDE074,#ffe470);
+			background: -moz-linear-gradient(top left,#2B93D2,#FA5889,#CDE074,#ffe470);
+			background: -o-linear-gradient(top left,#2B93D2,#FA5889,#CDE074,#ffe470);
+			background: linear-gradient(top left,#2B93D2,#FA5889,#CDE074,#ffe470);
+		}
+        .box li {
+        	position: relative;
+        	line-height: 30px;
+        }
+        .box span {
+        	display: block;
+        	padding-left: 20px;
+
+        }
+        .box em {
+        	position: absolute;
+        	top: 7px;
+        	left: 0;
+        	width: 16px;
+        	height:16px;
+        	background: url("img/public-24.png") no-repeat -146px -106px;
+        	cursor: pointer;
+        }
+        .box em.open {
+        	background-position: -167px -106px;
+        }
+        .box .two {
+        	margin-left: 20px;
+        }
+        .box .three {
+        	margin-left: 30px;
+        }
+        .box .four {
+        	margin-left: 40px;
+        }
+        .box .two,.box .three,.box .four {
+        	display: none;
+        }
+	</style>
+</head>
+<body>
+	<div id="box" class="box">
+		<ul>
+			<li>
+				<em></em><span>第一级第一个</span>
+				<ul class="two">
+					<li><span>第二级第一个</span></li>
+					<li>
+						<em></em><span>第二级第二个</span>
+						<ul class="three">
+							<li><span>第三级第一个</span></li>
+							<li><span>第三级第二个</span></li>
+							<li>
+								<em></em><span>第三级第三个</span>
+								<ul class="four">
+									<li><span>第四级第一个</span></li>
+							        <li><span>第四级第二个</span></li>
+							        <li><span>第四级第二个</span></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<em></em><span>第二级第三个</span>
+						<ul class="three">
+							<li><span>第三级第一个</span></li>
+							<li><span>第三级第二个</span></li>
+							<li><span>第三级第三个</span></li>						
+						</ul>
+
+					</li>
+				</ul>
+			</li>
+			<li>
+				<em></em><span>第一级第二个</span>
+				<ul class="two">
+					<li><span>第二级第一个</span></li>
+					<li>
+						<em></em><span>第二级第二个</span>
+						<ul class="three">
+							<li><span>第三级第一个</span></li>
+							<li><span>第三级第二个</span></li>
+							<li>
+								<em></em><span>第三级第三个</span>
+								<ul class="four">
+									<li><span>第四级第一个</span></li>
+							        <li><span>第四级第二个</span></li>
+							        <li><span>第四级第二个</span></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<em></em><span>第二级第三个</span>
+						<ul class="three">
+							<li><span>第三级第一个</span></li>
+							<li><span>第三级第二个</span></li>
+							<li><span>第三级第三个</span></li>						
+						</ul>
+
+					</li>
+				</ul>
+			</li>
+			
+		</ul>		
+	</div>
+<script type="text/javascript">
+	//把列表中的span(前面有em的)设置一个cursor: pointer样式
+	var box = document.getElementById("box");
+	var spanList = box.getElementsByTagName("span");
+	for (var i=0,len=spanList.length;i<len;i++) {
+		var curSpan = spanList[i];
+		var curPre = curSpan.previousElementSibling;
+		if (curPre&&curPre.tagName.toLowerCase()==="em") {
+			curSpan.style.cursor = "pointer";
+		}
+	}
+    //使用事件委托
+    //获取子元素
+    function children(curEle,tagName){
+		var ary = [];
+		if (/MISE(6|7|8)/i.test(navigator.userAgent)) {
+            var nodeList = oDiv.childNodes;	
+		    for (var i=0,len=nodeList.length;i<len;i++){
+			var curNode = nodeList[i];
+			    if(curNode.nodeType===1){
+                    ary[ary.length]=curNode;
+			    }
+	       	}
+		}
+		else {
+            ary = Array.prototype.slice.call(curEle.children);
+		}
+		//二次筛选
+		if (typeof tagName==="string") {
+			for (var k=0;k<ary.length;k++) {
+                var curEleNode = ary[k];
+                if (curEleNode.nodeName.toLowerCase()!== tagName.toLowerCase()){	
+                	ary.splice(k,1);
+                	k--;
+                }
+			}
+		}
+		return ary;
+	}
+    box.onclick = function (e) {
+    	e = e||window.event;
+    	var tar = e.target || e.srcElement;
+    	//只有点击的是span或者em元素我们才能进行展开或者收缩的操作
+    	if (/^(span||em)$/i.test(tar.tagName)) {
+    		var parent = tar.parentNode;
+    		var oEm = children(parent,"em")[0];
+    		var firstUl = children(parent,"ul")[0];
+    		console.log(firstUl);
+    		if (firstUl) {
+    			//如果当前ul显示,让其隐藏，否则让其显示
+    			if (firstUl.style.display==="block"){
+    				firstUl.style.display="none";
+    				if (oEm) {
+    					oEm.classList.remove("open");
+    				}
+    				//当外层的隐藏，里面所有ul都要隐藏，并且所有的em都要移除open样式
+    				var allUl = parent.getElementsByTagName("ul");
+    				var allEm = parent.getElementsByTagName("em");
+    				for (var i=0;i<allUl.length;i++){
+    					allUl[i].style.display="none";
+    					allEm[i].classList.remove("open");
+    				}
+
+    			}
+    			else {
+    				firstUl.style.display="block";
+    				if (oEm) {
+    					oEm.classList.add("open");
+    				}
+    			}
+    		}
+
+    	}
+   };
+  
+</script>	
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>鼠标跟随(jquery版）</title>
+	<style type="text/css">
+	    * {
+	    	margin: 0;
+	    	padding: 0;
+	    }
+	    img {
+	    	display: block;
+	    	border: none;
+
+	    }
+		.box {
+			margin: 20px auto;
+			width: 450px;
+			position: relative;
+		}
+		.box img {
+			float: left;
+			width: 100px;
+			height: 75px;
+			margin-left: 10px;
+            border:1px solid #008000;
+
+		}
+		#mark {
+			display: none;
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 10;
+			width: 400px;
+			height: 300px;
+			border: 1px solid #0077B0;
+		}
+		#mark img {
+			float: inherit;
+			margin-left: 0;
+			width: 0;
+            border: none;
+			height: 100%;
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div id="box" class="box">
+		<img src="img/5.jpg" bigImage="img/1.jpg">
+		<img src="img/6.jpg" bigImage="img/2.jpg">
+		<img src="img/7.jpg" bigImage="img/3.jpg">
+		<img src="img/8.jpg" bigImage="img/4.jpg">
+		<div id="mark">
+			<img src="img/1.jpg">
+		</div>
+	</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+	//等价于$(document).ready();
+	$(function(){
+		var $box = $("#box");
+		var $mark = $("#mark");
+		var $boxOffset = $box.offset();
+		//console.log($boxOffset);
+		$box.children("img").mouseover(function(e){
+		e = e||window.event;
+		e.target=e.target||e.srcElement;
+		var left = e.clientX-$boxOffset.left+10;
+		var top = e.clientY-$boxOffset.top+10;
+		$mark.stop().show(500).css({left:left,top:top}).find("img").attr("src",e.target.getAttribute("bigImage"));
+	    }).mousemove(function(e){
+	    	e = e||window.event;
+		    e.target=e.target||e.srcElement;
+		    var left = e.clientX-$boxOffset.left+10;
+		    var top = e.clientY-$boxOffset.top+10;
+		    $mark.show(500).css({left:left,top:top});
+	    }).mouseout(function(e){
+	    	$mark.stop().hide();
+
+	    })
+	});	
+</script>	
+</body>
+</html>

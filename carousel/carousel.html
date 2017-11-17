@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基础轮播图</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			font-size: 14px;
+			-webkit-user-select: none;
+		}
+		ul,li {
+			list-style: none;
+		}
+		img {
+			display: block;
+			border: none;
+		}
+		a {
+			display: block;
+			color: #000;
+			text-decoration: none;
+		}
+		a:hover,a:active,a:visited,a:target {
+			display: block;
+			color: #000;
+			text-decoration: none;
+		}
+		.banner {
+			margin: 0 auto;
+			position: relative;
+			width: 790px;
+			height: 340px;
+			overflow: hidden;
+		}
+		.banner .inner {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 790px;
+			height: 340px;
+		}
+		.banner .inner div {
+			float: left;
+			width: 790px;
+			height: 340px;
+			background: url("img/default.jpg") no-repeat center center #eee;
+		}
+		.banner .inner img {
+			display: none;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+		.banner .bannerTip {
+			position: absolute;
+			bottom: 20px;
+			right: 20px;
+			height: 18px;
+		}
+        .banner .bannerTip li {
+        	float: left;
+        	margin-left: 10px;
+        	width: 18px;
+        	height: 18px;
+        	border-radius: 50%;
+        	background: lightblue;
+        	cursor: pointer;
+        }
+        .banner .bannerTip li.bg {
+        	background: orange;
+        }
+        .banner a {
+        	cursor: pointer; 
+        	width: 46px;
+        	height: 46px;
+        	position: absolute;
+        	top: 50%;
+        	margin-top: -23px;
+        	z-index: 10;
+        	opacity: 0.5;
+        	filter: alpha(opacity=50);
+        
+        }
+        .bannerLeft {
+        	background: url("img/newIndexIcon-24.png") no-repeat  0 -130px;
+        	left: 30px;
+
+        }
+        .bannerRight {
+        	background: url("img/newIndexIcon-24.png") no-repeat -56px -130px;
+        	right: 30px;
+        }
+
+	</style>
+</head>
+<body>
+	<div class="banner" id="banner">
+		<div class="inner">
+			<!-- <img src="img/banner1.jpg" alt="">
+			<img src="img/banner2.jpg" alt="">
+			<img src="img/banner3.png" alt="">
+			<img src="img/banner4.jpg" alt=""> -->
+		</div>
+		<ul class="bannerTip">
+			<!-- <li class="bg"></li>
+			<li></li>
+			<li></li>
+			<li></li> -->
+		</ul>
+		<a href="javascript:;" class="bannerLeft"></a>
+		<a href="javascript:;" class="bannerRight"></a>	
+	</div>
+<script type="text/javascript" src="js/utils.js"></script>	
+<script type="text/javascript" src="js/tween.js"></script>	
+<script type="text/javascript" src="js/banner.js"></script>	
+
+</body>
+</html>

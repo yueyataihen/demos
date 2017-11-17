@@ -1,0 +1,6 @@
+[
+{"img":"img/banner1.jpg","desc":"手机"},
+{"img":"img/banner2.jpg","desc":"零食"},
+{"img":"img/banner3.png","desc":"黑黑乳"},
+{"img":"img/banner4.jpg","desc":"洗面奶"}
+]

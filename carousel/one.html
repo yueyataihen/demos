@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    
+    .wrap {
+        margin: 0 auto;
+        width: 1200px;
+        position: relative;
+    }
+    
+    .wrap_pic {
+        width: 1200px;
+        height: 240px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .wrap_pic div {
+        width: 1200px;
+        height: 240px;
+        position: absolute;
+    }
+    
+    .wrap_pic img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .wrap ul {
+        list-style: none;
+    }
+    
+    .wrap ul li {
+        display: inline-block;
+        width: 80px;
+        height: 40px;
+        background-color: #ddd;
+        text-align: center;
+        line-height: 30px;
+        opacity: .3;
+    }
+    
+    .wrap ul li img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .aft,
+    .pre {
+        position: absolute;
+        top: 100px;
+        z-index: 1;
+        width: 80px;
+        height: 80px;
+    }
+    
+    .aft img,
+    .pre img {
+        width: 100%;
+        height: 100%;
+
+    }
+    
+    .pre {
+        left: 30px;
+    }
+    
+    .aft {
+        right: 30px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="wrap_pic" id="wrap_pic">
+            <div><img src="image/1.jpg"></div>
+            <div><img src="image/2.jpg"></div>
+            <div><img src="image/3.jpg"></div>
+            <div><img src="image/4.jpg"></div>
+            <div><img src="image/5.jpg"></div>
+            <div><img src="image/6.jpg"></div>
+            <div><img src="image/7.jpg"></div>
+            <div><img src="image/8.jpg"></div>
+        </div>
+        <div class="pre" id="pre"><img src="image/prev.png"></div>
+        <div class="aft" id="aft"><img src="image/next.png"></div>
+        <ul id="wrap_ul">
+            <li><img src="image/1.jpg"></li>
+            <li><img src="image/2.jpg"></li>
+            <li><img src="image/3.jpg"></li>
+            <li><img src="image/4.jpg"></li>
+            <li><img src="image/5.jpg"></li>
+            <li><img src="image/6.jpg"></li>
+            <li><img src="image/7.jpg"></li>
+            <li><img src="image/8.jpg"></li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+    var wp_pic = document.getElementById("wrap_pic");
+    var wp_div = wp_pic.getElementsByTagName("div");
+    var wp_ul = document.getElementById("wrap_ul");
+    var wp_li = wp_ul.getElementsByTagName("li");
+    
+    var preBtn = document.getElementById("pre");
+    var aftBtn = document.getElementById("aft");
+    var index = 0;
+
+
+    function showpic(element) {
+        for (var i = 0; i < wp_div.length; i++) {
+            wp_div[i].style.display = "none";
+            wp_li[i].style.opacity=.3;
+        }
+        wp_div[element].style.display = "block";
+        wp_li[element].style.opacity=1;
+    }
+
+    function slideByclick(n) {
+        // 获取当前显示的图片的索引
+        for (var i = 0; i < wp_li.length;) {
+            if (wp_div[i].style.display != "block") {
+                i++;
+                // alert(i);
+            } else {
+                // 当前要显示的图片的索引
+                var now = i + n;
+                // 如果当前显示的是第一张，点击后显示最后一张图片
+                if (now < 0) {
+                    now = wp_div.length - 1;
+                }
+                // 如果当前显示的是最后一张，点击后显示第一张图片
+                if (now > (wp_div.length - 1)) {
+                    now = 0;
+                }
+                // alert("now");
+                for (var i = 0; i < wp_div.length; i++) {
+                	wp_li[i].style.opacity=.3;
+                    wp_div[i].style.display = "none";
+                }
+                wp_div[now].style.display = "block";
+                wp_li[now].style.opacity=1;
+            }
+        }
+    }
+
+    function autoslide() {
+
+        if (index >= wp_li.length) {
+            index = 0;
+        }
+        for (var i = 0; i < wp_div.length; i++) {
+
+            wp_div[i].style.display = "none";
+            wp_li[i].style.opacity=.3;
+        }
+        wp_div[index].style.display = "block";
+        wp_li[index].style.opacity=1;
+        index++;
+    }
+
+
+    window.onload = function() {
+    	var timer = setInterval("autoslide()", 2000);
+    	// 默认显示第一张图片
+        wp_div[0].style.display = "block";
+        // 循环添加事件
+        for (var i = 0; i < wp_li.length; i++) {
+            // 添加索引
+            wp_li[i].id = i;
+            wp_li[i].onmouseover = function() {
+                showpic(this.id);
+                clearInterval(timer);
+            }
+            wp_li[i].onmouseout = function() {
+            	this.style.opacity=.3;
+                timer = setInterval("autoslide()", 2000);
+            }
+        }
+        preBtn.onclick = function() {
+            slideByclick(-1);
+        }
+        aftBtn.onclick = function() {
+            slideByclick(1);
+        }
+        preBtn.onmouseover = function() {
+            clearInterval(timer);
+        }
+        preBtn.onmouseout = function() {
+            timer = setInterval("autoslide()", 2000);
+        }
+        aftBtn.onmouseover = function() {
+            clearInterval(timer);
+        }
+        aftBtn.onmouseout = function() {
+            timer = setInterval("autoslide()", 2000);
+        }
+    }
+    </script>
+</body>
+
+</html>

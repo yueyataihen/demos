@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>放大镜效果</title>
+	<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	#box {
+		position: relative;
+		/*z-index: 10;*/
+		margin: 20px;
+		width: 350px;
+		height: 350px;
+		border: 1px solid #999;
+		box-shadow:3px 3px 10px 0 #111111;
+
+	}	
+	#box img {
+		width: 350px;
+		height: 350px;
+	}
+	#mark {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 175px;
+		height: 175px;
+		background: #000;
+		opacity: 0.5;
+		filter: alpha(opacity=50);
+		display: none;
+		cursor: move;
+		/*border-radius: 50%;*/
+	}
+	#boxRight {
+		display: none;
+		position: absolute;
+		width: 525px;
+		height: 525px;
+		top: 20px;
+		left:370px;
+		border: 1px solid #999;
+		overflow: hidden;
+		/*border-radius: 50%;*/
+	}
+	#boxRight img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 200%;
+		height:200%;
+	}
+	</style>
+	
+</head>
+<body>
+	<div id="box">
+		<img src="img/iphone8-1.jpg">
+		<div id="mark"></div>
+	</div>
+	<div id="boxRight">
+		<img src="img/iphone8.jpg" alt="">
+	</div>
+
+	
+</body>
+<script type="text/javascript">
+	//原理是mark的横向（纵向）是box的横向（纵向）的一半，右侧大图横向、纵向都应该是左侧小图的两倍。
+	var box = document.getElementById("box");
+	var mark = document.getElementById("mark");
+	var boxRight = document.getElementById("boxRight");
+	function setPosition(e){
+		//正常情况下获取的top、left值
+		var top = e.clientY-box.offsetTop-(mark.offsetHeight/2);
+		var left = e.clientX-box.offsetLeft-(mark.offsetWidth/2);
+		var tempL = 0,tempT = 0;
+		var minL = 0,minT = 0,maxL = box.offsetWidth-mark.offsetWidth,maxT = box.offsetHeight-mark.offsetHeight;
+		if(left<minL){
+			mark.style.left = minL+"px";
+			tempL = minL;
+		} else if(left>maxL) {
+            mark.style.left = maxL+"px";
+            tempL = maxL;
+		} else {
+			mark.style.left = left+"px";
+			tempL = left;
+		}
+        if(top<minT){
+			mark.style.top = minT+"px";
+			tempT = minT;
+		} else if(top>maxT) {
+            mark.style.top = maxT+"px";
+            tempT = maxT;
+		} else {
+			mark.style.top = top +"px";
+			tempT = top;
+		}
+        //让右侧的图片跟着运动,左侧移动多少，右侧大图跟着移动它的两倍
+        var oImg = boxRight.getElementsByTagName("img")[0];
+        oImg.style.left = -tempL*2*1.5+"px";
+        oImg.style.top = -tempT*2*1.5+"px";
+	}
+	box.onmouseenter = function(e){
+		e = e||window.event;
+		mark.style.display = "block";
+		setPosition(e);
+		boxRight.style.display = "block";
+	};
+	box.onmousemove = function(e){
+		e = e||window.event;
+		mark.style.display = "block";
+		setPosition(e);
+	};
+	box.onmouseleave = function(e){
+		e = e||window.event;
+		mark.style.display = "none";
+		setPosition(e);
+		boxRight.style.display = "none";
+	};
+
+</script>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>超级计算器</title>
+	<style type="text/css">
+    body {
+    font-family: "Courier New", Courier, monospace;
+    font-size: .85em;
+    }
+    header {
+    text-align: center;
+    }
+    h2 {
+        text-align: center;
+        font-size: 1.2em;
+        border-top: 2px dashed yellow;
+        border-bottom: 2px dashed yellow;
+    }
+    #calculator {
+        border:1px solid #dadada;
+        border-radius:4px;
+        padding:4px;
+    }
+    .input-area {
+        background-color:#42ff8c;
+        margin:8px;
+        padding:8px;
+        text-align: center;
+        border-radius:8px;
+    }
+    .output-area {
+        background-color:#333;
+        color:#fff;
+        font-size: 1.5em;
+        margin:8px;
+        padding:8px;
+    }
+    input[type=text] {
+        background-color:#dadada;
+        font-size: 1.2em;
+        width:40px;
+        height:40px;
+        margin-left:20px;
+    }
+    input[type=submit] {
+    width: 200px;
+    font-size: 2em;
+    }
+    .operator-choices {
+        text-align: left;
+    }
+	</style>
+</head>
+<body>
+    <div id="calculator">
+       <header>
+           <h1>JS Super-Calculator</h1>
+           <p>The super-calculator shows the result of using different operators</p>
+       </header>
+       <div class="input-area">
+           <h2>Step 1: Enter the 1st Operand</h2>
+           <input type="text" value="1" id="operand1">
+           <select id="operand1-type">
+               <option value="number">number</option>
+               <option value="string">string</option>             
+           </select>
+       </div>
+       <div class="input-area">
+           <h2>Step 2: Choose an Operator</h2>
+           <div class="operator-choices">
+               <h3>Arithmetic Operators</h3>
+               <input type="radio" name="operator" value="+" checked>+&nbsp;
+               <input type="radio" name="operator" value="-">-&nbsp;
+               <input type="radio" name="operator" value="*">*&nbsp;
+               <input type="radio" name="operator" value="/">/&nbsp;
+               <input type="radio" name="operator" value="%">%&nbsp;
+               
+               <h3>String Operator</h3>
+               <input type="radio" name="operator" value="concat">+ (concatenation) &nbsp;
+
+               <h3>Comparison Operators</h3>
+               <input type="radio" name="operator" value="==">==&nbsp;
+               <input type="radio" name="operator" value="===">===&nbsp;
+               <input type="radio" name="operator" value="!=">!=&nbsp;
+               <input type="radio" name="operator" value="!==">!==&nbsp;
+               <input type="radio" name="operator" value=">">&gt;&nbsp;
+               <input type="radio" name="operator" value=">=">&gt;=&nbsp;
+               <input type="radio" name="operator" value="<">&lt;&nbsp;
+               <input type="radio" name="operator" value="<=">&lt;=&nbsp;
+           </div>
+       </div>
+       <div class="input-area">
+           <h2>Step 3: Enter the 2nd Operand</h2>
+           <input type="text" value="1" id="operand2">
+           <select id="operand2-type">
+               <option value="number">number</option>
+               <option value="string">string</option>             
+           </select>
+       </div>
+       <div class="input-area">
+           <h2>Step 4: Click the Button</h2>
+           <input type="submit" id="submit" value="Operate!">
+       </div>
+       <hr>
+       <div class="output-area">
+           <h2>Output</h2>
+           <h3>Operation</h3>
+           <span id="final-operation">???</span>
+           <h3>Return Value:</h3>
+           <span id="reslut">???</span>
+       </div>
+    
+    </div>
+	
+</body>
+<script>
+    document.getElementById("submit").addEventListener("click",calculateIt);
+    function calculateIt (){
+        // 创建一些变量
+        var myOperator;
+        var returnValue;
+
+        var operand1 = document.getElementById("operand1").value;
+        var operand2 = document.getElementById("operand2").value;
+        var select1 = document.getElementById("operand1-type");
+        var select2 = document.getElementById("operand2-type");
+        var operand1type = select1.value;
+        var operand2type = select2.value;
+
+        var radios = document.getElementsByName("operator");
+
+        // 转换运算值
+        switch(operand1type){
+            case "string":
+            operand1 = String(operand1);
+            break;
+            case "number":
+            operand1 = Number(operand1);
+            break;
+        }
+        switch(operand2type){
+            case "string":
+            operand2=String(operand2);
+            break;
+            case "number":
+            operand2=Number(operand2);
+            break;
+        }
+        
+         for(var i = 0,length = radios.length;i < length; i++){
+            if(radios[i].checked){
+                myOperator = radios[i].value;
+                switch(radios[i].value){
+                    case "+":
+                        returnValue = operand1 + operand2;
+                        break;
+                    case "-":
+                        returnValue = operand1 - operand2;
+                        break;
+                    case "*":
+                        returnValue = operand1 * operand2;
+                        break;
+                    case "/":
+                        returnValue = operand1 / operand2;
+                        break;
+                    case "%":
+                        returnValue = operand1 % operand2;
+                        break;
+                    case "concat":
+                        returnValue = operand1 + operand2;
+                        myOperator = "+";
+                        break;
+                    case "==":
+                        returnValue = operand1 == operand2;
+                        break;
+                    case "===":
+                        returnValue = operand1 === operand2;
+                        break;
+                    case "!=":
+                        returnValue = operand1 != operand2;
+                        break;
+                    case "!==":
+                        returnValue = operand1 !== operand2;
+                        break;
+                    case ">":
+                        returnValue = operand1 > operand2;
+                        break;
+                    case ">=":
+                        returnValue = operand1 >= operand2;
+                        break;
+                    case "<":
+                        returnValue = operand1 < operand2;
+                        break;
+                    case "<=":
+                        returnValue = operand1 <= operand2;
+                        break;
+                }
+                break;
+            }
+
+         }
+         // 展示运算过程
+        if(typeof(operand1) === "string"){
+            operand1 = '"' + operand1 + '"';
+        }
+        if(typeof(operand2) === "string"){
+            operand2 = '"' + operand2 + '"';
+        }
+        document.getElementById("final-operation").innerHTML = operand1 + myOperator + operand2;
+        document.getElementById("reslut").innerHTML = returnValue;
+    };
+	
+</script>
+</html>

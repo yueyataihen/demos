@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DOM映射机制</title>
+	<style type="text/css">
+	    * {
+			margin :0;
+			padding: 0;
+			font-size: 14px;
+		}
+		ul,li {
+			list-style: none;
+		}
+		.ul1 {
+			width: 300px;
+			margin: 50px auto;
+			
+		}
+		.ul1 li {
+			height: 30px;
+			line-height: 30px;
+			border-bottom:1px dashed green;
+		}
+		
+	</style>
+</head>
+<body>
+	<ul id="ul1" class="ul1">
+		<li>87</li>
+		<li>90</li>
+		<li>89</li>
+		<li>88</li>
+		<li>86</li>
+	</ul>	
+</body>
+<script type="text/javascript" src="../js/utils.js"></script>
+<script type="text/javascript">
+	var oUl = document.getElementById("ul1");
+	var oLis = oUl.getElementsByTagName("li");
+	
+	var oLi = document.createElement("li");
+	oUl.appendChild(oLi);
+
+    console.log(oLis.length);
+	
+	//DOM映射机制：页面中的标签和JS中获取到的元素对象或者元素集合是紧紧绑定在一起的，页面中的HTML结构改变了，JS中的不需要重新获取，集合中的内容也会跟着改变。
+
+
+</script>
+</html>

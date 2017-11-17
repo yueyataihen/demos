@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>慕课网-弹出层</title>
+<style type="text/css">
+#close{ 
+    background:url(http://img.mukewang.com/532c272100018d1600300030.jpg) no-repeat; 
+    width:30px; 
+	height:30px; 
+	cursor:pointer; 
+	position:absolute; 
+	right:5px; 
+	top:15px; 
+	text-indent:-999em;
+	}
+#login{ 
+	position:fixed;
+	z-index:1001;
+	}
+.loginCon{ 
+	position:relative; 
+	width:670px;
+	height:380px;
+	background:url(http://img.mukewang.com/532c26ee0001ded006700380.jpg) #2A2C2E center center no-repeat;
+	}
+</style>
+<link type="text/css" rel="stylesheet" href="style/main.css" />
+<script>
+function openNew(){
+    //获取页面的高度和宽度
+    var sWidth=document.documentElement.scrollWidth;
+    var sHeight=document.documentElement.scrollHeight
+	
+    //获取页面的可视区域高度和宽度
+    var wHeight=document.documentElement.clientHeight;     // 获取页面可视区域的高度
+    var wWidth=document.documentElement.clientWidth;
+            
+    var oLogin=document.createElement("div");
+		oLogin.id="login";
+		oLogin.innerHTML="<div class='loginCon'><div id='close'>点击关闭</div></div>";
+	document.body.appendChild(oLogin);//插入创建的登陆框
+	
+	//获取登陆框的宽和高
+	var dHeight= oLogin.offsetHeight  ;   // 获取登陆框的高度
+    var dWidth= oLogin.offsetWidth;      // 获取登陆框的宽度
+		//设置登陆框的left和top
+		oLogin.style.left=wWidth/2-dWidth/2+"px";
+		oLogin.style.top= wHeight/2-dHeight/2+"px";  //设置登陆框top值
+	var oClose=document.getElementById("close");
+	
+		//点击登陆框以外的区域也可以关闭登陆框
+		oClose.onclick=function()
+		{
+			document.body.removeChild(oLogin);
+		}
+}			
+window.onload=function()
+{
+	var oBtn=document.getElementById("btnLogin");
+		//点击登录按钮
+		oBtn.onclick=function()
+		{
+		 openNew();//执行openNew函数
+		}		
+				
+}	
+
+
+</script>
+
+</head>
+
+<body>
+<div id="header">
+  <div class="container" id="nav">
+    <h1 id="logo"><a href="/">慕课网</a></h1>
+    <ul class="l" id="nav-item">
+      <li> <a href="/course/list">课程</a> </li>
+    </ul>
+    <div id="login-area">
+      <button id="btnLogin" hidefocus="true" class="login-btn">登录</button>
+    </div>
+  </div>
+</div>
+
+<div id="main">
+    <div class="slider-container">
+      <div id="slider">
+        <ul id="sliderUl">
+          <li id="bg01"></li>
+        </ul>
+        <div id="dotBox"><span class=""></span><span class="active"></span><span class=""></span></div>
+      </div>
+      <div id="discripcontainer">
+        <div class="discripbg"></div>
+        <div class="discrip">
+          <h3>换一种方式</h3>
+          <h2>来学习互联网编程</h2>
+          <h4>超酷的IT技术免费学习平台</h4>
+          <div class="btnarea"> <a id="enterbtn" href="#">进入</a> <a id="learnmore" href="javascript:;">了解更多</a> </div>
+        </div>
+      </div>
+    </div>     
+  </div>
+</body>
+</html>

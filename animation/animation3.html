@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基础动画</title>
+	<style type="text/css">
+		div{
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100px;
+			height: 100px;
+			background: lightgreen;
+            opacity: 1;
+            filter: alpha(opacity=100);
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript" src="tween.min.js"></script>
+<script type="text/javascript">
+
+    // function Linear (t,d,b,c) {
+    // 	return (t/d)*c+b;
+    // }
+    // var oBox = document.getElementById("box");
+    // var target = utils.win("clientWidth")-oBox.offsetWidth;
+    // var beginLeft = utils.css(oBox,"left"),beginTop = utils.css(oBox,"top");
+    // var targetLeft = 1000,targetTop = 500;
+    // var changeLeft = targetLeft - beginLeft,changeTop = targetTop - beginTop;
+    // var duration = 3000,time = 0;
+    // oBox.timer = window.setInterval(function(){
+    // 	time += 10;
+    // 	//console.log(time);
+    // 	if(time >= duration){
+    // 		utils.css(oBox,{
+    //             left:targetLeft,
+    //             top:targetTop
+    //         });
+    //         window.clearInterval(oBox.timer);
+    //         return;
+    // 	}
+    // 	var curLeft = Linear(time,duration,beginLeft,changeLeft);
+    //     var curTop = Linear(time,duration,beginTop,changeTop);
+    //     utils.css(oBox,{
+    //         left:curLeft,
+    //         top:curTop
+    //     });
+    // },10);
+
+    //使用动画库重改代码
+    var oBox = document.getElementById("box");
+    Animate(oBox,{
+        left: 1000,
+        top: 500,
+        opacity: 0.5,
+        //width: 0,
+        //height: 0
+    },1000,function(){
+        utils.css(this,"background","red");
+    });
+
+
+
+
+
+</script>
+</body>
+</html>

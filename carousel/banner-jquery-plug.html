@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图(渐隐渐现Jquery插件版）</title>
+	<link rel="stylesheet" type="text/css" href="css/banner.css">
+</head>
+<body>
+	<div class="banner" id="bannerFir">
+		<div class="inner">
+		</div>
+		<ul class="bannerTip">
+		</ul>
+		<a href="javascript:;" class="bannerLeft"></a>
+		<a href="javascript:;" class="bannerRight"></a>	
+	</div>
+	<div class="banner" id="bannerTwo">
+		<div class="inner">
+		</div>
+		<ul class="bannerTip">
+		</ul>
+		<a href="javascript:;" class="bannerLeft"></a>
+		<a href="javascript:;" class="bannerRight"></a>	
+	</div>
+<script charset="UTF-8" type="text/javascript" src="js/jquery.1.10.2.js"></script>	
+<script charset="UTF-8" type="text/javascript" src="js/banner-jquery-plug.js"></script>
+<script type="text/javascript">
+	$("#bannerFir").banner("json/banner.txt",3000);
+	$("#bannerTwo").banner("json/banner.txt",3000);
+	
+</script>
+</body>
+</html>

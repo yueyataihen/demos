@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>酒仙网轮播例子</title>
+	<style type="text/css">
+	
+    /**{
+    	margin: 0;
+    	padding:0;
+    }*/
+	.carousel {
+		position:relative;
+		height:470px;
+		width: 1440px;
+		overflow: hidden;
+		/*outline:3px solid #f00;*/
+	}
+    .window {
+    	position:relative;
+    	height:470px;
+    	/*width:1440px;*/
+		/*width:900%;*/
+		/*overflow: hidden;*/
+    }
+    .image_reel {
+    	position:absolute;
+    	/*left:-1440px;*/
+		/*float: left;
+		display: inline-block;*/
+
+
+    }
+    .image_reel img {
+    	/*height:470px;
+		width:1440px;*/
+		/*padding:0;*/
+		/*margin:0;*/
+		float: left;
+
+    }
+    
+    .paging {
+    	position:absolute;
+    	z-index: 2;
+    	bottom:20px;
+    	right:20px;
+    	display: none;
+    }
+    .paging a{
+	  text-decoration: none;
+		color: #fff;
+		padding:5px;
+    	text-align: center;
+    	display: inline-block;
+
+	}
+
+    .paging a:hover {
+    	background: #920000;
+    	font-weight:bold;
+    }
+    .paging a.active {
+    	background: #920000;
+    	font-weight:bold;
+    }
+		
+	</style>
+</head>
+<body>
+    <div>
+    	
+    </div>
+    <div class="carousel">
+        <div class="window">
+            <div class="image_reel" id="list">
+   	            <a href=""><img src="img/d.jpg" alt=""></a>
+   	            <a href=""><img src="img/e.jpg" alt=""></a>
+   	            <a href=""><img src="img/f.jpg" alt=""></a>
+   	            <a href=""><img src="img/d.jpg" alt=""></a>
+   	        </div>
+        <div class="paging" id="buttons">
+            <a rel="1" href="">1</a>
+            <a rel="2" href="">2</a>
+            <a rel="3" href="">3</a>
+        </div>
+    </div>	
+</body>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+<script type="text/javascript">
+window.onload=function(){
+
+$(".paging").show();
+$(".paging a:first").addClass("active");
+
+
+var imageWidth = $(".window").width();
+var imageSum = $(".image_reel img").size();
+var imageReelWidth = imageWidth * imageSum;
+$(".image_reel").css({"width":imageReelWidth});
+
+rotate = function(){
+  var triggerID = $active.attr("rel")-1;
+  var images_reelPosition = triggerID * imageWidth;
+
+  $(".paging a").removeClass("active");
+  $active.addClass("active");
+
+  $(".image_reel").animate({
+    left : - images_reelPosition
+  },500)
+};
+
+rotateSwitch=function(){
+  play=setInterval(function(){
+    $active =$(".paging a.active").next();
+    if($active.length==0){
+      $active = $(".paging a:first");
+    }
+  rotate();
+  },2000);
+};
+rotateSwitch();
+
+// on hover
+$(".image_reel a").hover(function(){
+  clearInterval(play);
+},function(){
+  rotateSwitch();
+});
+
+// onclick
+$(".paging a").click(function(){
+  $active=$(this);
+  clearInterval(play);
+  rotate();
+  rotateSwitch();
+  return false;
+});
+}
+   // $(".paging a").click(function(){
+   //   $(this).addClass("active");
+   //   $(".paging a").not($(this)).removeClass("active");
+   // });
+</script>
+</html>

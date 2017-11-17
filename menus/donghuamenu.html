@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+       body {
+          margin: 0 200px;
+          padding:0;
+
+         }
+         a {
+          text-decoration: none;
+         }
+         .top-nav {
+          font-size:14px;
+          font-weight:bold;
+          list-style: none;
+          height:34px;
+
+         }
+         .top-nav>li {
+          float: left;
+          margin-left:1px;
+          list-style: none;
+          
+         }
+         .top-nav li a {
+          background: #3f240e;
+          color:#fff;
+          line-height:34px;
+          display: block;
+          text-align: center;
+          width: 80px;
+         }
+         .top-nav li a:hover {
+          background: url(http://img.mukewang.com/5461b50d0001e28000010034.jpg) 0 0 repeat-x;
+         }
+         .note {
+            color: #3f240e;
+            display: block;
+            background: url(http://img.mukewang.com/5461b50d0001e28000010034.jpg) 0 0 repeat-x;
+         }
+         .top-nav ul {
+          zoom:1;
+          position:absolute;
+          list-style: none;
+          padding: 0;
+          /*display: none;*/
+          height:0;
+          overflow: hidden;
+         }
+         .top-nav ul li{
+            float: left;
+           
+        }
+        .corner
+        {
+            display: block;
+            height: 11px;
+            background: url(http://img.mukewang.com/5461b5620001410d00170011.jpg) 31px 0 no-repeat;
+        }
+
+    </style>
+    <script type="text/javascript">
+       var t; //将这里的定义放在函数中声明 将产生抖动（未清理定时器）
+       window.onload = function (){
+          var Lis = document.getElementsByTagName('li');
+          for (var i=0;i<Lis.length;i++) {
+            Lis[i].onmouseover = function(){
+              var u = this.getElementsByTagName('ul')[0];
+              if (u!=undefined){
+                ChangeH(u.id,1)
+              }
+
+            }
+            Lis[i].onmouseleave = function(){
+              var u = this.getElementsByTagName('ul')[0];
+              if (u!=undefined){
+                ChangeH(u.id,-1)
+              }
+
+            }
+          }
+          }
+
+          function ChangeH (id,count){
+            // 根据ID找到ulList，同时得到其高度
+            var ulList = document.getElementById(id);
+            var h =ulList.offsetHeight;
+            h +=count;
+            if (count>0) {
+                if ( h<=42){
+                  ulList.style.height = h +'px';
+                  t=setTimeout("ChangeH('"+id+"',1)",10);
+                }
+                else {
+                  return;
+                }
+            }
+            else {
+                if (h>0){
+                  ulList.style.height = h +'px';
+                  t=setTimeout("ChangeH('"+id+"',-1)",10);
+                }
+                else {
+                  return;
+                }
+            }
+
+          }
+          // debugger;
+    </script>
+</head>
+<body>
+    <ul class="top-nav">
+        <li><a href="#"><span class="note">慕课网</span></a> </li>
+        <li><a href="#">课程大厅</a> </li>
+        <li><a href="#">学习中心</a>
+            <ul id="mnuUL">
+                <span class="corner"></span>
+                <li><a href="#">前端课程 </a></li>
+                <li><a href="#">手机开发</a> </li>
+                <li><a href="#">后台编程</a></li>
+            </ul>
+        </li>
+        <li><a href="#">关于我们</a></li>
+    </ul>
+</body>
+</html>
